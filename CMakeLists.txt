@@ -15,7 +15,7 @@ find_package(std_msgs)
 find_package(pcl_ros)
 find_package(tf2)
 find_package(tf2_ros)
-find_package(livox_ros2_driver)
+# find_package(livox_ros2_driver)
 find_package(livox_interfaces)
 find_package(Eigen3 REQUIRED)
 find_package(PCL REQUIRED)
@@ -39,7 +39,7 @@ set(DEPENDENCIES
   "pcl_ros"
   "tf2"
   "tf2_ros"
-  "livox_ros2_driver"
+  # "livox_ros2_driver"
   "livox_interfaces"
 )
 

@@ -7,13 +7,13 @@
 #include <pcl/point_types.h>
 #include <pcl/filters/voxel_grid.h>
 #include <pcl/kdtree/kdtree_flann.h>
-#include<pcl/io/pcd_io.h>
+#include <pcl/io/pcd_io.h>
 
 #include <rclcpp/rclcpp.hpp>
 #include <sensor_msgs/msg/point_cloud2.hpp>
 #include <tf2/LinearMath/Quaternion.h>
 #include <tf2/LinearMath/Transform.h>
-#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.hpp>
 #include <tf2_ros/transform_broadcaster.h>
 
 typedef pcl::PointXYZI PointType;
@@ -224,7 +224,7 @@ void pointAssociateToMap_all(PointType const * const pi, PointType * const po)
 }
 void RGBpointAssociateToMap(PointType const * const pi, pcl::PointXYZRGB * const po)
 {
-    double s;
+    [[maybe_unused]] double s;
     s = pi->intensity - int(pi->intensity);
 
     // float rx = (1-s)*transformLastMapped[0] + s * transformAftMapped[0];
@@ -676,7 +676,7 @@ int main(int argc, char** argv)
 
             laserCloudCornerFromMap->clear();
             laserCloudSurfFromMap->clear();
-            
+
             for (int i = 0; i < laserCloudValidNum; i++) {
                 *laserCloudCornerFromMap += *laserCloudCornerArray[laserCloudValidInd[i]];
                 *laserCloudSurfFromMap += *laserCloudSurfArray[laserCloudValidInd[i]];
@@ -687,12 +687,12 @@ int main(int argc, char** argv)
             laserCloudCornerLast_down->clear();
             downSizeFilterCorner.setInputCloud(laserCloudCornerLast);
             downSizeFilterCorner.filter(*laserCloudCornerLast_down);
-            int laserCloudCornerLast_downNum = laserCloudCornerLast_down->points.size();
+            [[maybe_unused]] int laserCloudCornerLast_downNum = laserCloudCornerLast_down->points.size();
 
             laserCloudSurfLast_down->clear();
             downSizeFilterSurf.setInputCloud(laserCloudSurfLast);
             downSizeFilterSurf.filter(*laserCloudSurfLast_down);
-            int laserCloudSurfLast_downNum = laserCloudSurfLast_down->points.size();
+            [[maybe_unused]] int laserCloudSurfLast_downNum = laserCloudSurfLast_down->points.size();
 
             std::cout<<"DEBUG MAPPING laserCloudCornerLast_down : "<<laserCloudCornerLast_down->points.size()<<" laserCloudSurfLast_down : "
             <<laserCloudSurfLast_down->points.size()<<std::endl;
@@ -713,7 +713,7 @@ int main(int argc, char** argv)
                     num_temp++;
                     laserCloudOri->clear();
                     coeffSel->clear();
-                    for (int i = 0; i < laserCloudCornerLast->points.size(); i++) {
+                    for (size_t i = 0; i < laserCloudCornerLast->points.size(); i++) {
                         pointOri = laserCloudCornerLast->points[i];
 
                         pointAssociateToMap(&pointOri, &pointSel);
@@ -824,7 +824,7 @@ int main(int argc, char** argv)
                     }
                     //std::cout <<"DEBUG mapping select corner points : " << coeffSel->size() << std::endl;
 
-                    for (int i = 0; i < laserCloudSurfLast_down->points.size(); i++) {
+                    for (size_t i = 0; i < laserCloudSurfLast_down->points.size(); i++) {
                         pointOri = laserCloudSurfLast_down->points[i];
 
                         pointAssociateToMap(&pointOri, &pointSel);
@@ -1003,7 +1003,7 @@ int main(int argc, char** argv)
 
             t3 = clock();
 
-            for (int i = 0; i < laserCloudCornerLast->points.size(); i++) {
+            for (size_t i = 0; i < laserCloudCornerLast->points.size(); i++) {
                 pointAssociateToMap(&laserCloudCornerLast->points[i], &pointSel);
 
                 int cubeI = int((pointSel.x + 25.0) / 50.0) + laserCloudCenWidth;
@@ -1023,7 +1023,7 @@ int main(int argc, char** argv)
                 }
             }
 
-            for (int i = 0; i < laserCloudSurfLast_down->points.size(); i++) {
+            for (size_t i = 0; i < laserCloudSurfLast_down->points.size(); i++) {
                 pointAssociateToMap(&laserCloudSurfLast_down->points[i], &pointSel);
 
                 int cubeI = int((pointSel.x + 25.0) / 50.0) + laserCloudCenWidth;

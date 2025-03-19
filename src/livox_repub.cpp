@@ -1,6 +1,6 @@
 #include <pcl_conversions/pcl_conversions.h>
 #include <sensor_msgs/msg/point_cloud2.hpp>
-#include "livox_ros_driver2/msg/custom_msg.hpp"
+#include "livox_interfaces/msg/custom_msg.hpp"
 
 typedef pcl::PointXYZINormal PointType;
 typedef pcl::PointCloud<PointType> PointCloudXYZI;
@@ -9,9 +9,9 @@ rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pub_pcl_out0;
 rclcpp::Publisher<sensor_msgs::msg::PointCloud2>::SharedPtr pub_pcl_out1;
 uint64_t TO_MERGE_CNT = 1; 
 constexpr bool b_dbg_line = false;
-std::vector<livox_ros_driver2::msg::CustomMsg::SharedPtr> livox_data;
+std::vector<livox_interfaces::msg::CustomMsg::SharedPtr> livox_data;
 
-void LivoxMsgCbk1(const livox_ros_driver2::msg::CustomMsg::SharedPtr livox_msg_in) {
+void LivoxMsgCbk1(const livox_interfaces::msg::CustomMsg::SharedPtr livox_msg_in) {
   livox_data.push_back(livox_msg_in);
   if (livox_data.size() < TO_MERGE_CNT) return;
 
@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
   rclcpp::init(argc, argv);
   std::cout << "livox_repub" << std::endl;
   auto node = std::make_shared<rclcpp::Node>("livox_repub");
-  auto sub_livox_msg1 = node->create_subscription<livox_ros_driver2::msg::CustomMsg>("livox/lidar", 100, LivoxMsgCbk1);
+  auto sub_livox_msg1 = node->create_subscription<livox_interfaces::msg::CustomMsg>("livox/lidar", 100, LivoxMsgCbk1);
   pub_pcl_out1 = node->create_publisher<sensor_msgs::msg::PointCloud2>("livox_pcl0", rclcpp::QoS(100));
   rclcpp::spin(node);
   rclcpp::shutdown();
