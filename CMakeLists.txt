@@ -15,7 +15,8 @@ find_package(std_msgs)
 find_package(pcl_ros)
 find_package(tf2)
 find_package(tf2_ros)
-find_package(livox_ros_driver2)
+find_package(livox_ros2_driver)
+find_package(livox_interfaces)
 find_package(Eigen3 REQUIRED)
 find_package(PCL REQUIRED)
 find_package(OpenCV REQUIRED)
@@ -38,7 +39,8 @@ set(DEPENDENCIES
   "pcl_ros"
   "tf2"
   "tf2_ros"
-  "livox_ros_driver2"
+  "livox_ros2_driver"
+  "livox_interfaces"
 )
 
 set(EXECUTABLE_NAME "loam_scanRegistration")
@@ -71,8 +73,20 @@ ament_target_dependencies(${EXECUTABLE_NAME4} ${DEPENDENCIES})
 # Install
 ################################################################################
 
+# Install executables
 install(TARGETS ${EXECUTABLE_NAME} ${EXECUTABLE_NAME2} ${EXECUTABLE_NAME3} ${EXECUTABLE_NAME4}
   DESTINATION lib/${PROJECT_NAME}
+)
+
+# Install launch files
+install(DIRECTORY
+  launch
+  DESTINATION share/${PROJECT_NAME}
+)
+
+install(DIRECTORY
+  rviz_cfg
+  DESTINATION share/${PROJECT_NAME}
 )
 
 
