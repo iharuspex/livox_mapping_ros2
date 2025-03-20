@@ -120,8 +120,8 @@ void laserCloudHandler(const sensor_msgs::msg::PointCloud2::SharedPtr laserCloud
   int cloudSize = laserCloudIn.points.size();
 
   if(cloudSize > 32000) cloudSize = 32000;
-  
-  int count = cloudSize;
+
+  [[maybe_unused]] int count = cloudSize;
   PointType point;
   pcl::PointCloud<PointType> Allpoints;
 
@@ -131,14 +131,14 @@ void laserCloudHandler(const sensor_msgs::msg::PointCloud2::SharedPtr laserCloud
     point.y = laserCloudIn.points[i].y;
     point.z = laserCloudIn.points[i].z;
     double theta = std::atan2(laserCloudIn.points[i].y,laserCloudIn.points[i].z) / M_PI * 180 + 180;
-    
+
     scanID = std::floor(theta / 9);
     float dis = point.x * point.x
                 + point.y * point.y
                 + point.z * point.z;
 
     double dis2 = laserCloudIn.points[i].z * laserCloudIn.points[i].z + laserCloudIn.points[i].y * laserCloudIn.points[i].y;
-    double theta2 = std::asin(sqrt(dis2/dis)) / M_PI * 180;
+    [[maybe_unused]] double theta2 = std::asin(sqrt(dis2/dis)) / M_PI * 180;
 
     point.intensity = scanID+(laserCloudIn.points[i].intensity/10000);
     //point.intensity = scanID+(double(i)/cloudSize);
@@ -177,11 +177,11 @@ void laserCloudHandler(const sensor_msgs::msg::PointCloud2::SharedPtr laserCloud
   bool right_surf_flag = false;
   Eigen::Vector3d surf_vector_current(0,0,0);
   Eigen::Vector3d surf_vector_last(0,0,0);
-  int last_surf_position = 0;
-  double depth_threshold = 0.1;
+  [[maybe_unused]] int last_surf_position = 0;
+  [[maybe_unused]] double depth_threshold = 0.1;
   //********************************************************************************************************************************************
   for (int i = 5; i < cloudSize - 5; i += count_num ) {
-    float depth = sqrt(laserCloud->points[i].x * laserCloud->points[i].x +
+    [[maybe_unused]] float depth = sqrt(laserCloud->points[i].x * laserCloud->points[i].x +
                        laserCloud->points[i].y * laserCloud->points[i].y +
                        laserCloud->points[i].z * laserCloud->points[i].z);
 
@@ -449,7 +449,7 @@ void laserCloudHandler(const sensor_msgs::msg::PointCloud2::SharedPtr laserCloud
                 + laserCloud->points[i].y * laserCloud->points[i].y
                 + laserCloud->points[i].z * laserCloud->points[i].z;
     float dis2 = laserCloud->points[i].y * laserCloud->points[i].y + laserCloud->points[i].z * laserCloud->points[i].z;
-    float theta2 = std::asin(sqrt(dis2/dis)) / M_PI * 180;
+    [[maybe_unused]] float theta2 = std::asin(sqrt(dis2/dis)) / M_PI * 180;
     //std::cout<<"DEBUG theta "<<theta2<<std::endl;
     // if(theta2 > 34.2 || theta2 < 1){
     //    continue;
