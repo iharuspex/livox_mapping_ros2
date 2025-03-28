@@ -19,6 +19,7 @@ rviz_config_path = os.path.join(
   get_package_share_directory('livox_mapping_ros2'), 'rviz_cfg/loam_livox.rviz'
 )
 
+
 def generate_launch_description():
   scan_registration = Node(
     package='livox_mapping_ros2',

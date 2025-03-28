@@ -15,11 +15,10 @@ laser_mapping_parameters=[
   { "filter_parameter_surf": filter_parameter_surf }
 ]
 
-cur_path = os.path.split(os.path.realpath(__file__))[0] + '/'
-cur_config_path = cur_path + '../config'
 rviz_config_path = os.path.join(
   get_package_share_directory('livox_mapping_ros2'), 'rviz_cfg/loam_livox.rviz'
 )
+
 
 def generate_launch_description():
   scan_registration_horizon = Node(
@@ -54,7 +53,6 @@ def generate_launch_description():
       output='screen',
       arguments=['--display-config', rviz_config_path]
   )
-
 
   return LaunchDescription([
     scan_registration_horizon,
