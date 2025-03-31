@@ -18,7 +18,7 @@ find_package(tf2_ros)
 # find_package(livox_ros2_driver)
 find_package(livox_interfaces)
 find_package(Eigen3 REQUIRED)
-find_package(PCL REQUIRED)
+# find_package(PCL REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(OpenMP QUIET)
 
